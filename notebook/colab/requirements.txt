@@ -1,0 +1,7 @@
+pydantic
+pandas
+fastapi
+numpy
+pycaret
+uvicorn
+unidecode

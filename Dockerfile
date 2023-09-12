@@ -1,17 +1,23 @@
+# Use a imagem base oficial do Python
 FROM python:3.8-slim
 
-# Configuração da pasta de trabalho no container
+# Defina o diretório de trabalho no contêiner
 WORKDIR /app
 
-# requisitos do projeto 
+# Copie o arquivo requirements.txt para o diretório de trabalho
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY modelo_2.pkl .
+COPY api.py .
 
-# Copie o código da aplicação para o container
+# Instale as dependências do aplicativo
+RUN pip install -r requirements.txt
+
+# Copie todo o conteúdo do diretório local para o diretório de trabalho no contêiner
 COPY . .
 
-# Porta em que a aplicação Flask irá escutar
-EXPOSE 5000
+# Exponha a porta em que o aplicativo FastAPI estará em execução
+EXPOSE 8000
 
-# Comando para iniciar a aplicação Flask
-CMD ["python", "app.py"]
+# Comando para iniciar o aplicativo FastAPI
+# no lugar do app deveria ser meu arquivo api em pkl
+CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
